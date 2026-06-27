@@ -926,6 +926,7 @@ tbody tr.projected-row.korea-row {
   }
 
   td[data-label="팀"] {
+    grid-column: 1;
     justify-content: flex-start;
     padding-left: 8px;
     background: transparent;
@@ -935,6 +936,26 @@ tbody tr.projected-row.korea-row {
   td[data-label="조"],
   td[data-label="경기"] {
     display: none;
+  }
+
+  td[data-label="승"] {
+    grid-column: 2;
+  }
+
+  td[data-label="무"] {
+    grid-column: 3;
+  }
+
+  td[data-label="패"] {
+    grid-column: 4;
+  }
+
+  td[data-label="승점"] {
+    grid-column: 5;
+  }
+
+  td[data-label="득실"] {
+    grid-column: 6;
   }
 
   td[data-label="팀"] strong {
