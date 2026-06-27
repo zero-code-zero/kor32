@@ -205,7 +205,6 @@ const matches = [
     opponent: "가나",
     opponentFlag: "gh",
     date: "2026.06.28 06:00 KST",
-    dateEt: "2026.06.27 17:00 ET",
     startsAt: Date.parse("2026-06-27T21:00:00Z"),
     fifaRank: 11,
     opponentFifaRank: 68,
@@ -222,7 +221,7 @@ const matches = [
     drawEnough: true,
     adaptation: 62,
     opponentAdaptation: 58,
-    note: "한국은 L조에서 가나가 크로아티아를 이기는 결과가 필요하다. 크로아티아가 이기거나 비기면 한국보다 위에 남는다.",
+    note: "한국은 L조에서 가나가 크로아티아를 이기는 결과가 필요하다. 크로아티아가 이기거나 비기면 한국은 32강 탈락.",
     requiredBadges: [{ label: "가나 승", tone: "good" }],
     aboveWhen: (outcome) => outcome === "win" || outcome === "draw",
   },
@@ -234,7 +233,6 @@ const matches = [
     opponent: "오스트리아",
     opponentFlag: "at",
     date: "2026.06.28 11:00 KST",
-    dateEt: "2026.06.27 22:00 ET",
     startsAt: Date.parse("2026-06-28T02:00:00Z"),
     fifaRank: 32,
     opponentFifaRank: 25,
@@ -268,7 +266,6 @@ const matches = [
     opponentFlag: "nz",
     opponentLabel: "뉴질랜드",
     date: "2026.06.27 12:00 KST",
-    dateEt: "2026.06.26 23:00 ET",
     startsAt: Date.parse("2026-06-27T03:00:00Z"),
     fifaRank: 9,
     opponentFifaRank: 89,
@@ -290,7 +287,6 @@ const matches = [
     opponent: "우즈베키스탄",
     opponentFlag: "uz",
     date: "2026.06.28 08:30 KST",
-    dateEt: "2026.06.27 19:30 ET",
     startsAt: Date.parse("2026-06-27T23:30:00Z"),
     fifaRank: 60,
     opponentFifaRank: 57,
@@ -411,7 +407,6 @@ function renderControls() {
             </div>
             <div class="match-date">
               <strong>${match.date}</strong>
-              <span>${match.dateEt}</span>
             </div>
           </header>
           <div class="segmented" role="group" aria-label="${match.team} 경기 결과 선택">
