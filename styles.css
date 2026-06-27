@@ -830,13 +830,15 @@ tbody tr.projected-row.korea-row {
   }
 
   thead {
-    display: table-header-group;
+    display: block;
+    width: 100%;
   }
 
   thead tr {
     display: grid;
     grid-template-columns: minmax(72px, 1.4fr) repeat(5, minmax(28px, 0.6fr));
     align-items: center;
+    width: 100%;
     margin-bottom: 6px;
     border: 1px solid var(--line);
     border-radius: 8px;
