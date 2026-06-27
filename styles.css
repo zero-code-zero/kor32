@@ -130,43 +130,6 @@ main {
   line-height: 1.68;
 }
 
-.metric-row {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 28px;
-}
-
-.metric {
-  min-height: 104px;
-  padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: #f9fbfa;
-}
-
-.metric span {
-  display: block;
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.metric strong {
-  display: block;
-  margin-top: 10px;
-  font-size: clamp(24px, 3vw, 38px);
-  line-height: 1;
-  letter-spacing: 0;
-}
-
-.model-note {
-  margin: 16px 0 0;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.55;
-}
-
 .pitch-visual {
   position: relative;
   min-height: 370px;
@@ -320,7 +283,7 @@ main {
 
 table {
   width: 100%;
-  min-width: 980px;
+  min-width: 820px;
   border-collapse: collapse;
 }
 
@@ -620,31 +583,6 @@ tbody tr.projected-row.korea-row {
   background: #fff4f1;
 }
 
-.badge {
-  display: inline-flex;
-  align-items: center;
-  min-height: 28px;
-  padding: 4px 9px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 800;
-}
-
-.badge.safe {
-  background: #e5f5ec;
-  color: var(--green-dark);
-}
-
-.badge.watch {
-  background: #fff2c7;
-  color: #745000;
-}
-
-.badge.outside {
-  background: #f8e5e2;
-  color: #96352e;
-}
-
 .match-list {
   display: grid;
   gap: 12px;
@@ -728,11 +666,6 @@ tbody tr.projected-row.korea-row {
   color: var(--muted);
   font-size: 13px;
   line-height: 1.5;
-}
-
-.match-card .probability-line {
-  color: var(--green-dark);
-  font-weight: 900;
 }
 
 .match-date {
@@ -859,7 +792,6 @@ tbody tr.projected-row.korea-row {
     height: 52px;
   }
 
-  .metric-row,
   .segmented {
     grid-template-columns: 1fr;
   }
@@ -894,12 +826,13 @@ tbody tr.projected-row.korea-row {
 
   tbody {
     display: grid;
-    gap: 12px;
+    gap: 8px;
   }
 
   tbody tr {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(72px, 1.4fr) repeat(5, minmax(28px, 0.6fr));
+    align-items: center;
     gap: 0;
     overflow: hidden;
     border: 1px solid var(--line);
@@ -939,47 +872,46 @@ tbody tr.projected-row.korea-row {
   td {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    min-height: 42px;
-    padding: 10px 12px;
-    border-bottom: 1px solid rgba(217, 226, 220, 0.82);
-    white-space: normal;
+    justify-content: center;
+    gap: 6px;
+    min-height: 36px;
+    padding: 8px 6px;
+    border-bottom: 0;
+    white-space: nowrap;
     min-width: 0;
+    font-size: 12px;
+    font-weight: 800;
   }
 
   td::before {
-    content: attr(data-label);
-    color: var(--muted);
-    font-size: 12px;
-    font-weight: 900;
-  }
-
-  td[data-label="팀"],
-  td[data-label="3차전 날짜"],
-  td[data-label="상태"] {
-    grid-column: 1 / -1;
+    display: none;
   }
 
   td[data-label="팀"] {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    align-items: center;
-    min-height: 54px;
-    background: rgba(255, 255, 255, 0.42);
+    justify-content: flex-start;
+    padding-left: 8px;
+    background: transparent;
+  }
+
+  td[data-label="순위"],
+  td[data-label="조"],
+  td[data-label="경기"] {
+    display: none;
   }
 
   td[data-label="팀"] strong {
-    justify-self: end;
     min-width: 0;
-    text-align: right;
+    text-align: left;
   }
 
-  td[data-label="상태"] .badge {
-    margin-left: auto;
+  td[data-label="팀"] .team-name {
+    gap: 5px;
   }
 
-  td[data-label="상태"] {
-    border-bottom: 0;
+  td[data-label="팀"] .flag {
+    width: 18px;
+    height: 12px;
+    flex-basis: 18px;
   }
+
 }

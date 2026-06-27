@@ -22,29 +22,11 @@
       <section class="hero-grid" aria-labelledby="summary-title">
         <div class="summary-panel">
           <p class="section-kicker">현재 위치</p>
-          <h2 id="summary-title">한국은 3점, 득실 -1로 3위 팀 순위 계산 중</h2>
+          <h2 id="summary-title">한국은 3점, 득실 -1</h2>
           <p class="summary-copy">
             48개국 체제에서는 각 조 1·2위와 3위 중 상위 8팀이 32강에 진출한다.
             현재 표 기준 한국은 커트라인 안쪽이지만, 남은 G·J·K·L조 3차전 결과에 따라
             8위 안에 남거나 9위로 밀릴 수 있다.
-          </p>
-          <div class="metric-row" aria-label="한국 32강 계산 요약">
-            <div class="metric">
-              <span>보정 확률</span>
-              <strong id="probability">계산 중</strong>
-            </div>
-            <div class="metric">
-              <span>남은 경기 가능 순위</span>
-              <strong id="korea-rank">계산 중</strong>
-            </div>
-            <div class="metric">
-              <span>판정</span>
-              <strong id="status-label">대기</strong>
-            </div>
-          </div>
-          <p class="model-note">
-            확률은 FIFA 랭킹 기반 전력 30%, 3차전 경기 성격(지지 않으면 유리한 팀의 승+무 확률) 30%, 지역·날씨 적응력 30%,
-            미지의 변수 10%를 반영한 보정 조합 확률이다. 정확한 스코어 예측은 반영하지 않는다.
           </p>
         </div>
 
@@ -53,7 +35,7 @@
           <div class="pitch-line box left"></div>
           <div class="pitch-line box right"></div>
           <div class="pitch-circle"></div>
-          <div class="team-chip korea"><span class="flag flag-kr" aria-hidden="true"></span>KOR<br /><span id="pitch-korea-rank">계산 중</span></div>
+          <div class="team-chip korea"><span class="flag flag-kr" aria-hidden="true"></span>KOR<br /><span id="pitch-korea-rank">-</span></div>
           <div class="team-chip cutline">CUT<br /><span>8위</span></div>
           <div class="team-chip threat one"><span class="flag flag-hr" aria-hidden="true"></span>CRO</div>
           <div class="team-chip threat two"><span class="flag flag-dz" aria-hidden="true"></span>ALG</div>
@@ -83,8 +65,6 @@
                 <th>패</th>
                 <th>승점</th>
                 <th>득실</th>
-                <th>3차전 날짜</th>
-                <th>상태</th>
               </tr>
             </thead>
             <tbody id="third-place-table"></tbody>
@@ -96,7 +76,7 @@
         <div class="section-heading compact">
           <div>
             <p class="section-kicker">남은 경기</p>
-            <h2 id="sim-title">결과를 바꿔서 경우의 수 보기</h2>
+            <h2 id="sim-title">결과별 경우의 수 보기</h2>
           </div>
         </div>
         <div id="match-controls" class="match-list"></div>
@@ -117,16 +97,7 @@
             FIFA Matchday 17: J·K·L조 최종전 경기 목록.
             <a href="https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/matchday-17-preview" target="_blank" rel="noreferrer">확인</a>
           </li>
-          <li>
-            FIFA Ranking: 2026년 6월 11일 업데이트 남자 세계랭킹을 전력 보정 기준으로 사용.
-            <a href="https://inside.fifa.com/fifa-world-ranking/men" target="_blank" rel="noreferrer">확인</a>
-          </li>
         </ul>
-        <p>
-          이 페이지의 계산 엔진은 “현재 3위 팀이 한국보다 앞서느냐”를 단순화해 계산한다.
-          선택하지 않은 남은 경기는 보정 확률을 쓰고, 선택한 경기는 사용자가 고른 결과를 100%로 고정한다.
-          실제 FIFA 순위는 승점, 골득실, 다득점, 페어플레이 등 공식 타이브레이커를 따른다.
-        </p>
       </section>
     </main>
 

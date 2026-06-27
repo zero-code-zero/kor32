@@ -8,6 +8,25 @@ const korea = {
   goalsFor: 2,
 };
 
+const teamAbbreviations = {
+  se: "SWE",
+  ec: "ECU",
+  ba: "BIH",
+  py: "PAR",
+  sn: "SEN",
+  hr: "CRO",
+  kr: "KOR",
+  dz: "ALG",
+  sct: "SCO",
+  cv: "CPV",
+  be: "BEL",
+  cd: "COD",
+  gh: "GHA",
+  at: "AUT",
+  nz: "NZL",
+  uz: "UZB",
+};
+
 const thirdPlaceRows = [
   {
     rank: 1,
@@ -303,7 +322,7 @@ const matches = [
     drawEnough: false,
     adaptation: 67,
     opponentAdaptation: 61,
-    note: "DR콩고가 이기면 한국보다 위로 올라간다. 한국은 DR콩고가 비기거나 지는 결과가 필요하다.",
+    note: "DR콩고가 이기면 한국보다 위로 올라간다. 한국은 DR콩고가 비기거나 지는 결과가 필요하다. 단, 우즈베키스탄이 6골 차 이상으로 크게 이기면 득실과 다득점 비교가 다시 문제가 될 수 있다.",
     requiredBadges: [
       { label: "DR콩고 무", tone: "good" },
       { label: "우즈베키스탄 승", tone: "good" },
@@ -311,18 +330,6 @@ const matches = [
     aboveWhen: (outcome) => outcome === "win",
   },
 ];
-
-const probabilityWeights = {
-  strength: 0.3,
-  context: 0.3,
-  adaptation: 0.3,
-  unknown: 0.1,
-};
-
-const confirmedTeamsAboveKorea = thirdPlaceRows.filter(
-  (row) => !row.threatId && !row.isKorea && isRowAboveKorea(row),
-).length;
-const remainingThreatSlots = 8 - confirmedTeamsAboveKorea - 1;
 
 const outcomes = [
   { value: "unknown", label: "미정" },
@@ -342,9 +349,6 @@ const orderedMatches = [...matches].sort((a, b) => a.startsAt - b.startsAt);
 
 const tableBody = document.querySelector("#third-place-table");
 const matchControls = document.querySelector("#match-controls");
-const probabilityEl = document.querySelector("#probability");
-const koreaRankEl = document.querySelector("#korea-rank");
-const statusLabelEl = document.querySelector("#status-label");
 const summaryTitleEl = document.querySelector("#summary-title");
 const pitchKoreaRankEl = document.querySelector("#pitch-korea-rank");
 
@@ -364,7 +368,6 @@ function renderTable() {
       ]
         .filter(Boolean)
         .join(" ");
-      const statusClass = getStatusClass(row);
 
       return `
         <tr class="${classes}">
@@ -377,8 +380,6 @@ function renderTable() {
           <td data-label="패">${row.losses}</td>
           <td data-label="승점">${row.points}</td>
           <td data-label="득실">${formatGoalDiff(row.goalDiff)}</td>
-          <td data-label="3차전 날짜">${row.matchDate}</td>
-          <td data-label="상태"><span class="badge ${statusClass}">${row.status}</span></td>
         </tr>
       `;
     })
@@ -403,7 +404,6 @@ function renderControls() {
               <h3>${match.group}조 · ${formatMatchTitle(match)}</h3>
               ${formatRequiredBadges(match)}
               <p>${match.note}</p>
-              <p class="probability-line">${formatMatchProbability(match)}</p>
             </div>
             <div class="match-date">
               <strong>${match.date}</strong>
@@ -435,7 +435,6 @@ function renderControls() {
       selectedOutcomes[button.dataset.match] = button.dataset.outcome;
       renderControls();
       renderTable();
-      renderScenario();
     });
   });
 }
@@ -560,159 +559,8 @@ function getProjectedStatus(row, rank) {
   return row.status === "진출권" ? "현재 밖" : row.status;
 }
 
-function getStatusClass(row) {
-  if (row.isKorea) {
-    return row.rank <= 8 ? "watch" : "outside";
-  }
-
-  if (row.projected) {
-    return row.rank <= 8 ? "safe" : "outside";
-  }
-
-  if (row.threatId) {
-    return "watch";
-  }
-
-  return row.rank <= 8 ? "safe" : "outside";
-}
-
 function formatGoalDiff(value) {
   return value > 0 ? `+${value}` : String(value);
-}
-
-function enumerateCases() {
-  const cases = [];
-  const variableMatches = matches.map((match) => {
-    const selected = selectedOutcomes[match.id];
-    const probabilities = getOutcomeProbabilities(match);
-    return {
-      match,
-      possible:
-        selected === "unknown"
-          ? [
-              ["win", probabilities.win],
-              ["draw", probabilities.draw],
-              ["loss", probabilities.loss],
-            ]
-          : [[selected, 1]],
-    };
-  });
-
-  function walk(index, picked, probability) {
-    if (index === variableMatches.length) {
-      cases.push({
-        outcomes: picked,
-        probability,
-      });
-      return;
-    }
-    const current = variableMatches[index];
-    current.possible.forEach(([outcome, outcomeProbability]) => {
-      walk(index + 1, {
-        ...picked,
-        [current.match.id]: outcome,
-      }, probability * outcomeProbability);
-    });
-  }
-
-  walk(0, {}, 1);
-  return cases;
-}
-
-function getOutcomeProbabilities(match) {
-  const strength = getStrengthDistribution(match);
-  const context = getContextDistribution(match);
-  const adaptation = getAdaptationDistribution(match);
-  const unknown = { win: 1 / 3, draw: 1 / 3, loss: 1 / 3 };
-
-  return normalizeDistribution({
-    win:
-      strength.win * probabilityWeights.strength +
-      context.win * probabilityWeights.context +
-      adaptation.win * probabilityWeights.adaptation +
-      unknown.win * probabilityWeights.unknown,
-    draw:
-      strength.draw * probabilityWeights.strength +
-      context.draw * probabilityWeights.context +
-      adaptation.draw * probabilityWeights.adaptation +
-      unknown.draw * probabilityWeights.unknown,
-    loss:
-      strength.loss * probabilityWeights.strength +
-      context.loss * probabilityWeights.context +
-      adaptation.loss * probabilityWeights.adaptation +
-      unknown.loss * probabilityWeights.unknown,
-  });
-}
-
-function getStrengthDistribution(match) {
-  const rankDiff = match.opponentFifaRank - match.fifaRank;
-  const win = clamp(0.34 + rankDiff * 0.004, 0.12, 0.72);
-  const draw = clamp(0.28 - Math.abs(rankDiff) * 0.001, 0.16, 0.3);
-  return normalizeDistribution({
-    win,
-    draw,
-    loss: 1 - win - draw,
-  });
-}
-
-function getContextDistribution(match) {
-  if (match.drawEnough) {
-    return {
-      win: 0.24,
-      draw: 0.62,
-      loss: 0.14,
-    };
-  }
-
-  return {
-    win: 0.44,
-    draw: 0.12,
-    loss: 0.44,
-  };
-}
-
-function getAdaptationDistribution(match) {
-  const adaptationDiff = match.adaptation - match.opponentAdaptation;
-  const win = clamp(0.34 + adaptationDiff * 0.004, 0.18, 0.58);
-  const draw = clamp(0.3 - Math.abs(adaptationDiff) * 0.001, 0.24, 0.32);
-  return normalizeDistribution({
-    win,
-    draw,
-    loss: 1 - win - draw,
-  });
-}
-
-function normalizeDistribution(distribution) {
-  const win = Math.max(0, distribution.win);
-  const draw = Math.max(0, distribution.draw);
-  const loss = Math.max(0, distribution.loss);
-  const total = win + draw + loss;
-
-  return {
-    win: win / total,
-    draw: draw / total,
-    loss: loss / total,
-  };
-}
-
-function clamp(value, min, max) {
-  return Math.min(max, Math.max(min, value));
-}
-
-function formatMatchProbability(match) {
-  const probabilities = getOutcomeProbabilities(match);
-
-  return `보정 확률: ${match.team} 승 ${formatPercent(probabilities.win)}, 무 ${formatPercent(probabilities.draw)}, 패 ${formatPercent(probabilities.loss)}`;
-}
-
-function evaluateCase(caseOutcomes) {
-  const threatsAbove = matches.filter((match) => isThreatAboveKorea(match, caseOutcomes[match.id])).length;
-  const rank = confirmedTeamsAboveKorea + threatsAbove + 1;
-  return {
-    rank,
-    qualifies: rank <= 8,
-    threatsAbove,
-  };
 }
 
 function isRowAboveKorea(row) {
@@ -723,79 +571,14 @@ function isRowAboveKorea(row) {
   return row.goalDiff > korea.goalDiff;
 }
 
-function isThreatAboveKorea(match, outcome) {
-  const projection = getThirdPlaceProjection(match, outcome);
-
-  if (projection.points !== korea.points) {
-    return projection.points > korea.points;
-  }
-
-  return projection.goalDiff > korea.goalDiff;
-}
-
-function getThirdPlaceProjection(match, outcome) {
-  if (outcome === match.opponentCanDropToThirdWhen) {
-    return match.opponentProjectedThird;
-  }
-
-  if (outcome === "loss" && match.opponentCanReplaceThird) {
-    return {
-      points: 4,
-      goalDiff: 0,
-    };
-  }
-
-  const row = thirdPlaceRows.find((item) => item.threatId === match.id);
-  const adjustment = outcomeAdjustments[outcome];
-
-  return {
-    points: row.points + adjustment.points,
-    goalDiff: row.goalDiff + adjustment.goalDiff,
-  };
-}
-
-function renderScenario() {
-  const cases = enumerateCases();
-  const evaluated = cases.map((item) => ({
-    outcomes: item.outcomes,
-    probability: item.probability,
-    ...evaluateCase(item.outcomes),
-  }));
-  const qualifyCases = evaluated.filter((item) => item.qualifies);
-  const totalProbability = evaluated.reduce((sum, item) => sum + item.probability, 0);
-  const probability =
-    qualifyCases.reduce((sum, item) => sum + item.probability, 0) / totalProbability;
-  const ranks = evaluated.map((item) => item.rank);
-  const minRank = Math.min(...ranks);
-  const maxRank = Math.max(...ranks);
-  const allSelected = Object.values(selectedOutcomes).every((value) => value !== "unknown");
-  const current = allSelected ? evaluated[0] : null;
-
-  probabilityEl.textContent = formatPercent(probability);
-  koreaRankEl.textContent =
-    minRank === maxRank ? `${minRank}위` : `${minRank}~${maxRank}위`;
-  statusLabelEl.textContent = allSelected
-    ? current.qualifies
-      ? "진출"
-      : "탈락"
-    : probability >= 0.5
-      ? "진출 가능"
-      : "위험";
-  statusLabelEl.style.color =
-    allSelected && !current.qualifies ? "var(--red)" : probability >= 0.5 ? "var(--green-dark)" : "var(--yellow)";
-}
-
-function formatPercent(value) {
-  return `${Math.round(value * 1000) / 10}%`;
-}
-
 function formatTeam(team, className = "", options = {}) {
   const classes = ["team-name", className].filter(Boolean).join(" ");
   const rank = options.rank ?? team.groupRank;
   const rankBadge = rank ? `<span class="rank-badge">조 ${rank}위</span>` : "";
   const label = team.label || team.team;
+  const displayLabel = teamAbbreviations[team.flag] || label;
 
-  return `<span class="${classes}"><span class="flag flag-${team.flag}" role="img" aria-label="${label} 국기"></span><span class="team-label">${label}</span>${rankBadge}</span>`;
+  return `<span class="${classes}"><span class="flag flag-${team.flag}" role="img" aria-label="${label} 국기"></span><span class="team-label" title="${label}">${displayLabel}</span>${rankBadge}</span>`;
 }
 
 function formatMatchTitle(match) {
@@ -806,8 +589,9 @@ function formatOpponent(match, className = "", options = {}) {
   const classes = ["team-name", className].filter(Boolean).join(" ");
   const rank = options.rank ?? match.opponentGroupRank;
   const rankBadge = rank ? `<span class="rank-badge">조 ${rank}위</span>` : "";
+  const displayLabel = teamAbbreviations[match.opponentFlag] || match.opponent;
 
-  return `<span class="${classes}"><span class="flag flag-${match.opponentFlag}" role="img" aria-label="${match.opponent} 국기"></span><span class="team-label">${match.opponent}</span>${rankBadge}</span>`;
+  return `<span class="${classes}"><span class="flag flag-${match.opponentFlag}" role="img" aria-label="${match.opponent} 국기"></span><span class="team-label" title="${match.opponent}">${displayLabel}</span>${rankBadge}</span>`;
 }
 
 function outcomeLabel(outcome) {
@@ -818,4 +602,3 @@ function outcomeLabel(outcome) {
 
 renderTable();
 renderControls();
-renderScenario();
