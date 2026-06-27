@@ -254,8 +254,11 @@ const matches = [
     drawEnough: true,
     adaptation: 62,
     opponentAdaptation: 58,
-    note: "한국은 L조에서 가나가 크로아티아를 이기는 결과가 필요하다. 크로아티아가 이기거나 비기면 한국은 32강 탈락.",
-    requiredBadges: [{ label: "가나 승", tone: "good" }],
+    note: "우루과이가 한국 아래로 확정되면서 가나 승이 단독 필수는 아니다. 가나 승이면 한국에 가장 유리하고, 크로아티아 승/무는 J·K조 결과까지 맞아야 한다.",
+    requiredBadges: [
+      { label: "가나 승 최선", tone: "good" },
+      { label: "크로아티아 승/무 위험", tone: "warn" },
+    ],
     aboveWhen: (outcome) => outcome === "win" || outcome === "draw",
   },
   {
@@ -282,10 +285,11 @@ const matches = [
     drawEnough: false,
     adaptation: 67,
     opponentAdaptation: 61,
-    note: "DR콩고가 이기면 한국보다 위로 올라간다. 한국은 DR콩고가 비기거나 지는 결과가 필요하다. 단, 우즈베키스탄이 6골 차 이상으로 크게 이기면 득실과 다득점 비교가 다시 문제가 될 수 있다.",
+    note: "DR콩고가 이기면 K조 3위가 한국보다 위로 온다. DR콩고 무승부나 우즈베키스탄 승이 유리하지만, DR콩고 승이어도 L·J조가 받쳐주면 한국이 8위에 남을 수 있다.",
     requiredBadges: [
       { label: "DR콩고 무", tone: "good" },
       { label: "우즈베키스탄 승", tone: "good" },
+      { label: "DR콩고 승 위험", tone: "warn" },
     ],
     aboveWhen: (outcome) => outcome === "win",
   },
@@ -305,11 +309,11 @@ const matches = [
     drawEnough: true,
     adaptation: 68,
     opponentAdaptation: 57,
-    note: "무승부면 J조 3위가 승점 4가 된다. 한국은 이 경기에서 승패가 갈리는 결과가 필요하다.",
+    note: "오스트리아 승이면 J조 3위가 한국 아래로 내려간다. 알제리 승은 오스트리아가 3점·득실 -1·다득점에서 한국보다 위라 위험하고, 무승부는 알제리가 승점 4가 된다.",
     requiredBadges: [
-      { label: "알제리 승", tone: "good" },
-      { label: "오스트리아 승", tone: "good" },
-      { label: "무승부 제외", tone: "warn" },
+      { label: "오스트리아 승 최선", tone: "good" },
+      { label: "알제리 승 위험", tone: "warn" },
+      { label: "무승부 위험", tone: "warn" },
     ],
     aboveWhen: (outcome) => outcome === "win" || outcome === "draw",
   },
@@ -505,6 +509,7 @@ function getProjectedRows() {
     .sort((a, b) => {
       if (b.points !== a.points) return b.points - a.points;
       if (b.goalDiff !== a.goalDiff) return b.goalDiff - a.goalDiff;
+      if ((b.goalsFor ?? 0) !== (a.goalsFor ?? 0)) return (b.goalsFor ?? 0) - (a.goalsFor ?? 0);
       return (a.sortRank ?? a.rank) - (b.sortRank ?? b.rank);
     })
     .map((row, index) => {
