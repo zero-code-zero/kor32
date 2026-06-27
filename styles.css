@@ -584,6 +584,63 @@ tbody tr.korea-row td:last-child {
   gap: 12px;
 }
 
+.scenario-sticky-summary {
+  position: sticky;
+  top: 92px;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 10px 26px rgba(22, 34, 28, 0.12);
+  backdrop-filter: blur(12px);
+}
+
+.scenario-sticky-summary div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.scenario-sticky-summary span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.scenario-sticky-summary strong {
+  color: var(--ink);
+  font-size: 20px;
+  line-height: 1;
+}
+
+.sticky-status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.sticky-status.qualify {
+  background: #e5f5ec;
+  color: var(--green-dark);
+}
+
+.sticky-status.eliminated {
+  background: #ffe1dd;
+  color: #96352e;
+}
+
 .match-card {
   display: grid;
   gap: 12px;
@@ -771,6 +828,16 @@ tbody tr.korea-row td:last-child {
 
   .match-card header {
     flex-direction: column;
+  }
+
+  .scenario-sticky-summary {
+    top: 8px;
+    margin: -2px 0 10px;
+    padding: 9px 10px;
+  }
+
+  .scenario-sticky-summary strong {
+    font-size: 18px;
   }
 
   .segmented {
