@@ -792,12 +792,18 @@ tbody tr.projected-row.korea-row {
     height: 52px;
   }
 
-  .segmented {
-    grid-template-columns: 1fr;
-  }
-
   .match-card header {
     flex-direction: column;
+  }
+
+  .segmented {
+    gap: 4px;
+  }
+
+  .segmented button {
+    min-height: 34px;
+    padding: 6px 4px;
+    font-size: 12px;
   }
 
   .match-date {
