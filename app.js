@@ -362,7 +362,6 @@ const orderedMatches = [...matches].sort((a, b) => a.startsAt - b.startsAt);
 
 const tableBody = document.querySelector("#third-place-table");
 const matchControls = document.querySelector("#match-controls");
-const summaryTitleEl = document.querySelector("#summary-title");
 const pitchKoreaRankEl = document.querySelector("#pitch-korea-rank");
 const stickyKoreaRankEl = document.querySelector("#sticky-korea-rank");
 const stickyKoreaStatusEl = document.querySelector("#sticky-korea-status");
@@ -403,7 +402,6 @@ function renderTable() {
 function renderCurrentRank(koreaRow) {
   if (!koreaRow) return;
 
-  summaryTitleEl.textContent = `한국은 3점, 득실 -1로 3위 팀 순위 ${koreaRow.rank}위`;
   pitchKoreaRankEl.textContent = `${koreaRow.rank}위`;
   stickyKoreaRankEl.textContent = `${koreaRow.rank}위`;
   stickyKoreaStatusEl.textContent = koreaRow.rank <= 8 ? "32강 진출권" : "32강 탈락권";

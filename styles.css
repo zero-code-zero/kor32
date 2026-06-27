@@ -94,12 +94,9 @@ main {
 }
 
 .hero-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
-  gap: 22px;
+  display: block;
 }
 
-.summary-panel,
 .panel {
   min-width: 0;
   border: 1px solid var(--line);
@@ -108,11 +105,6 @@ main {
   box-shadow: var(--shadow);
 }
 
-.summary-panel {
-  padding: clamp(22px, 4vw, 42px);
-}
-
-.summary-panel h2,
 .section-heading h2,
 .sources h2 {
   margin: 6px 0 0;
@@ -122,17 +114,9 @@ main {
   overflow-wrap: anywhere;
 }
 
-.summary-copy {
-  max-width: 760px;
-  margin: 18px 0 0;
-  color: var(--muted);
-  font-size: 17px;
-  line-height: 1.68;
-}
-
 .pitch-visual {
   position: relative;
-  min-height: 370px;
+  min-height: 420px;
   overflow: hidden;
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.34);
@@ -768,10 +752,6 @@ tbody tr.korea-row td:last-child {
     text-align: left;
   }
 
-  .hero-grid {
-    grid-template-columns: 1fr;
-  }
-
   .pitch-visual {
     min-height: 300px;
   }
@@ -799,19 +779,13 @@ tbody tr.korea-row td:last-child {
     padding: 16px 12px 34px;
   }
 
-  .summary-panel,
   .panel {
     padding: 18px 14px;
   }
 
-  .summary-panel h2,
   .section-heading h2,
   .sources h2 {
     font-size: 24px;
-  }
-
-  .summary-copy {
-    font-size: 15px;
   }
 
   .pitch-visual {
