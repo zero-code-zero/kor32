@@ -809,6 +809,9 @@ tbody tr.projected-row.korea-row {
   }
 
   table,
+  thead,
+  thead tr,
+  th,
   tbody,
   tr,
   td {
@@ -821,7 +824,42 @@ tbody tr.projected-row.korea-row {
   }
 
   thead {
+    display: table-header-group;
+  }
+
+  thead tr {
+    display: grid;
+    grid-template-columns: minmax(72px, 1.4fr) repeat(5, minmax(28px, 0.6fr));
+    align-items: center;
+    margin-bottom: 6px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #edf2ef;
+    overflow: hidden;
+  }
+
+  th {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 32px;
+    padding: 6px 4px;
+    border-bottom: 0;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  th:nth-child(1),
+  th:nth-child(2),
+  th:nth-child(4),
+  th:nth-child(10),
+  th:nth-child(11) {
     display: none;
+  }
+
+  th:nth-child(3) {
+    justify-content: flex-start;
+    padding-left: 8px;
   }
 
   tbody {
