@@ -196,19 +196,18 @@ const thirdPlaceRows = [
   {
     rank: 11,
     group: "G",
-    team: "Belgium",
-    label: "벨기에",
-    flag: "be",
-    played: 2,
+    team: "Iran",
+    label: "이란",
+    flag: "ir",
+    played: 3,
     wins: 0,
-    draws: 2,
+    draws: 3,
     losses: 0,
-    points: 2,
+    points: 3,
     goalDiff: 0,
-    goalsFor: 1,
-    matchDate: "2026.06.27 12:00 KST vs 뉴질랜드",
-    status: "미정",
-    dynamicGroup: "G",
+    goalsFor: 3,
+    matchDate: "2026.06.27 12:00 KST vs 이집트 종료",
+    status: "한국보다 위",
   },
   {
     rank: 12,
@@ -230,23 +229,6 @@ const thirdPlaceRows = [
 ];
 
 const matches = [
-  {
-    id: "egyptIran",
-    group: "G",
-    team: "이집트",
-    flag: "eg",
-    opponent: "이란",
-    opponentFlag: "ir",
-    date: "2026.06.27 12:00 KST",
-    startsAt: Date.parse("2026-06-27T03:00:00Z"),
-    groupRank: 1,
-    opponentGroupRank: 2,
-    note: "이집트가 이기면 G조 3위가 2점권에 남을 수 있다. 무승부나 이란 승이면 G조 3위가 한국보다 위로 온다.",
-    requiredBadges: [
-      { label: "이집트 승 필요", tone: "good" },
-      { label: "무/이란 승 위험", tone: "warn" },
-    ],
-  },
   {
     id: "croatia",
     group: "L",
@@ -333,17 +315,6 @@ const matches = [
 ];
 
 const groupDefinitions = {
-  G: {
-    teams: [
-      { team: "Egypt", label: "이집트", flag: "eg", rank: 1, played: 2, wins: 1, draws: 1, losses: 0, points: 4, goalDiff: 2, goalsFor: 4, goalsAgainst: 2 },
-      { team: "Iran", label: "이란", flag: "ir", rank: 2, played: 2, wins: 0, draws: 2, losses: 0, points: 2, goalDiff: 0, goalsFor: 2, goalsAgainst: 2 },
-      { team: "Belgium", label: "벨기에", flag: "be", rank: 3, played: 2, wins: 0, draws: 2, losses: 0, points: 2, goalDiff: 0, goalsFor: 1, goalsAgainst: 1 },
-      { team: "New Zealand", label: "뉴질랜드", flag: "nz", rank: 4, played: 2, wins: 0, draws: 1, losses: 1, points: 1, goalDiff: -2, goalsFor: 3, goalsAgainst: 5 },
-    ],
-    matches: [
-      { matchId: "egyptIran", team: "Egypt", opponent: "Iran" },
-    ],
-  },
   J: {
     teams: [
       { team: "Argentina", label: "아르헨티나", flag: "ar", rank: 1, played: 2, wins: 2, draws: 0, losses: 0, points: 6, goalDiff: 5, goalsFor: 5, goalsAgainst: 0 },
@@ -564,10 +535,6 @@ function getGroupThirdPlaceProjection(groupId) {
     return null;
   }
 
-  if (groupId === "G") {
-    return getGroupGThirdPlaceProjection();
-  }
-
   const groupRows = group.teams.map((team) => ({ ...team }));
   const teamsById = Object.fromEntries(groupRows.map((team) => [team.team, team]));
 
@@ -582,56 +549,6 @@ function getGroupThirdPlaceProjection(groupId) {
       if (b.goalsFor !== a.goalsFor) return b.goalsFor - a.goalsFor;
       return a.rank - b.rank;
     })[2];
-}
-
-function getGroupGThirdPlaceProjection() {
-  const egyptIranOutcome = selectedOutcomes.egyptIran;
-
-  if (egyptIranOutcome === "win") {
-    return {
-      team: "Iran",
-      label: "이란",
-      flag: "ir",
-      rank: 2,
-      played: 3,
-      wins: 0,
-      draws: 2,
-      losses: 1,
-      points: 2,
-      goalDiff: -1,
-      goalsFor: 2,
-    };
-  }
-
-  if (egyptIranOutcome === "draw") {
-    return {
-      team: "Iran",
-      label: "이란",
-      flag: "ir",
-      rank: 2,
-      played: 3,
-      wins: 0,
-      draws: 3,
-      losses: 0,
-      points: 3,
-      goalDiff: 0,
-      goalsFor: 3,
-    };
-  }
-
-  return {
-    team: "Egypt",
-    label: "이집트",
-    flag: "eg",
-    rank: 1,
-    played: 3,
-    wins: 1,
-    draws: 1,
-    losses: 1,
-    points: 4,
-    goalDiff: 1,
-    goalsFor: 4,
-  };
 }
 
 function applyMatchOutcome(team, opponent, outcome) {
