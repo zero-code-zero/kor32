@@ -728,6 +728,7 @@ tbody tr.korea-row td:last-child {
 
 .segmented button {
   min-height: 38px;
+  min-width: 0;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #ffffff;
@@ -735,6 +736,7 @@ tbody tr.korea-row td:last-child {
   font: inherit;
   font-size: 13px;
   font-weight: 800;
+  line-height: 1.15;
   cursor: pointer;
 }
 
@@ -847,7 +849,7 @@ tbody tr.korea-row td:last-child {
   .segmented button {
     min-height: 34px;
     padding: 6px 4px;
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .match-date {

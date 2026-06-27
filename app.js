@@ -464,7 +464,7 @@ function renderControls() {
                     data-outcome="${outcome.value}"
                     aria-pressed="${selectedOutcomes[match.id] === outcome.value}"
                   >
-                    ${outcome.label}
+                    ${formatOutcomeButtonLabel(match, outcome)}
                   </button>
                 `,
               )
@@ -492,6 +492,12 @@ function formatRequiredBadges(match) {
         .join("")}
     </div>
   `;
+}
+
+function formatOutcomeButtonLabel(match, outcome) {
+  if (outcome.value === "win") return `${match.team} 승`;
+  if (outcome.value === "loss") return `${match.opponent} 승`;
+  return outcome.label;
 }
 
 function getProjectedRows() {
