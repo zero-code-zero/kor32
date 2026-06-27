@@ -873,7 +873,6 @@ tbody tr.korea-row td:last-child {
 
   tbody tr.korea-row {
     border: 2px solid var(--red);
-    background: #fff4f1;
   }
 
   tbody tr.korea-row td {
