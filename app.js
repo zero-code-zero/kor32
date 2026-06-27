@@ -397,18 +397,15 @@ const pitchKoreaRankEl = document.querySelector("#pitch-korea-rank");
 function renderTable() {
   const projectedRows = getProjectedRows();
   const koreaRow = projectedRows.find((row) => row.isKorea);
-  const hasSelectedOutcome = Object.values(selectedOutcomes).some((outcome) => outcome !== "unknown");
 
   renderCurrentRank(koreaRow);
 
   tableBody.innerHTML = projectedRows
     .map((row) => {
-      const previousRank = row.previousRank ?? row.rank;
       const classes = [
         row.rank <= 8 ? "qualify-zone" : "",
+        row.rank > 8 ? "eliminated-zone" : "",
         row.isKorea ? "korea-row" : "",
-        hasSelectedOutcome && row.rank < previousRank ? "rank-up" : "",
-        hasSelectedOutcome && row.rank > previousRank ? "rank-down" : "",
       ]
         .filter(Boolean)
         .join(" ");
@@ -533,7 +530,6 @@ function getProjectedRows() {
       const rank = index + 1;
       return {
         ...row,
-        previousRank: row.sortRank ?? row.rank,
         rank,
         status: getProjectedStatus(row, rank),
       };

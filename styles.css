@@ -557,11 +557,11 @@ td {
 }
 
 tbody tr.qualify-zone {
-  background: #f5fbf7;
+  background: #edf8f2;
 }
 
-tbody tr.korea-row {
-  background: #fff4f1;
+tbody tr.eliminated-zone {
+  background: #fff0ed;
 }
 
 tbody tr.korea-row td {
@@ -577,32 +577,6 @@ tbody tr.korea-row td:first-child {
 tbody tr.korea-row td:last-child {
   border-right: 2px solid var(--red);
   border-radius: 0 8px 8px 0;
-}
-
-tbody tr.rank-up {
-  background: #e8f7ef;
-}
-
-tbody tr.rank-down {
-  background: #ffe1dd;
-}
-
-tbody tr.rank-up td:first-child {
-  box-shadow: inset 4px 0 0 var(--green);
-}
-
-tbody tr.rank-down td:first-child {
-  box-shadow: inset 4px 0 0 var(--red);
-}
-
-tbody tr.korea-row.rank-up,
-tbody tr.korea-row.rank-down {
-  background: #ffffff;
-}
-
-tbody tr.korea-row.rank-up td:first-child,
-tbody tr.korea-row.rank-down td:first-child {
-  box-shadow: none;
 }
 
 .match-list {
@@ -890,23 +864,11 @@ tbody tr.korea-row.rank-down td:first-child {
   }
 
   tbody tr.qualify-zone {
-    background: #f5fbf7;
+    background: #edf8f2;
   }
 
-  tbody tr.rank-up {
-    background: #e8f7ef;
-    box-shadow: inset 4px 0 0 var(--green);
-  }
-
-  tbody tr.rank-down {
-    background: #ffe1dd;
-    box-shadow: inset 4px 0 0 var(--red);
-  }
-
-  tbody tr.korea-row.rank-up,
-  tbody tr.korea-row.rank-down {
-    background: #ffffff;
-    box-shadow: none;
+  tbody tr.eliminated-zone {
+    background: #fff0ed;
   }
 
   tbody tr.korea-row {
