@@ -460,6 +460,14 @@ td {
   background: linear-gradient(90deg, #000000 0 33%, #fae042 33% 66%, #ed2939 66%);
 }
 
+.flag-eg {
+  background: linear-gradient(180deg, #ce1126 0 33%, #ffffff 33% 66%, #000000 66%);
+}
+
+.flag-ir {
+  background: linear-gradient(180deg, #239f40 0 33%, #ffffff 33% 66%, #da0000 66%);
+}
+
 .flag-cd {
   background:
     linear-gradient(145deg, transparent 0 40%, #f7d618 40% 45%, #ce1021 45% 58%, #f7d618 58% 63%, transparent 63%),

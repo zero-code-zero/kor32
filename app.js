@@ -20,6 +20,8 @@ const teamAbbreviations = {
   sct: "SCO",
   cv: "CPV",
   be: "BEL",
+  eg: "EGY",
+  ir: "IRN",
   cd: "COD",
   gh: "GHA",
   at: "AUT",
@@ -40,6 +42,7 @@ const thirdPlaceRows = [
     losses: 1,
     points: 4,
     goalDiff: 0,
+    goalsFor: 7,
     matchDate: "2026.06.26 KST 종료",
     status: "진출권",
   },
@@ -55,6 +58,7 @@ const thirdPlaceRows = [
     losses: 1,
     points: 4,
     goalDiff: 0,
+    goalsFor: 2,
     matchDate: "2026.06.26 KST 종료",
     status: "진출권",
   },
@@ -70,6 +74,7 @@ const thirdPlaceRows = [
     losses: 1,
     points: 4,
     goalDiff: -1,
+    goalsFor: 5,
     matchDate: "2026.06.25 KST 종료",
     status: "진출권",
   },
@@ -85,6 +90,7 @@ const thirdPlaceRows = [
     losses: 1,
     points: 4,
     goalDiff: -2,
+    goalsFor: 2,
     matchDate: "2026.06.26 KST 종료",
     status: "진출권",
   },
@@ -100,6 +106,7 @@ const thirdPlaceRows = [
     losses: 2,
     points: 3,
     goalDiff: 2,
+    goalsFor: 8,
     matchDate: "2026.06.27 KST 종료",
     status: "한국보다 위",
   },
@@ -115,9 +122,10 @@ const thirdPlaceRows = [
     losses: 1,
     points: 3,
     goalDiff: -1,
+    goalsFor: 3,
     matchDate: "2026.06.28 06:00 KST vs 가나",
     status: "미정",
-    threatId: "croatia",
+    dynamicGroup: "L",
   },
   {
     rank: 7,
@@ -131,6 +139,7 @@ const thirdPlaceRows = [
     losses: 2,
     points: 3,
     goalDiff: -1,
+    goalsFor: 2,
     matchDate: "2026.06.25 KST 종료",
     status: "현재 7위",
     isKorea: true,
@@ -147,9 +156,10 @@ const thirdPlaceRows = [
     losses: 1,
     points: 3,
     goalDiff: -2,
+    goalsFor: 2,
     matchDate: "2026.06.28 11:00 KST vs 오스트리아",
     status: "미정",
-    threatId: "algeria",
+    dynamicGroup: "J",
   },
   {
     rank: 9,
@@ -163,6 +173,7 @@ const thirdPlaceRows = [
     losses: 2,
     points: 3,
     goalDiff: -3,
+    goalsFor: 1,
     matchDate: "2026.06.25 KST 종료",
     status: "한국보다 아래",
   },
@@ -178,6 +189,7 @@ const thirdPlaceRows = [
     losses: 0,
     points: 3,
     goalDiff: 0,
+    goalsFor: 2,
     matchDate: "2026.06.27 09:00 KST vs 사우디아라비아 종료",
     status: "한국보다 위",
   },
@@ -193,9 +205,10 @@ const thirdPlaceRows = [
     losses: 0,
     points: 2,
     goalDiff: 0,
+    goalsFor: 1,
     matchDate: "2026.06.27 12:00 KST vs 뉴질랜드",
     status: "미정",
-    threatId: "belgium",
+    dynamicGroup: "G",
   },
   {
     rank: 12,
@@ -209,13 +222,31 @@ const thirdPlaceRows = [
     losses: 1,
     points: 1,
     goalDiff: -1,
+    goalsFor: 1,
     matchDate: "2026.06.28 08:30 KST vs 우즈베키스탄",
     status: "미정",
-    threatId: "drcongo",
+    dynamicGroup: "K",
   },
 ];
 
 const matches = [
+  {
+    id: "egyptIran",
+    group: "G",
+    team: "이집트",
+    flag: "eg",
+    opponent: "이란",
+    opponentFlag: "ir",
+    date: "2026.06.27 12:00 KST",
+    startsAt: Date.parse("2026-06-27T03:00:00Z"),
+    groupRank: 1,
+    opponentGroupRank: 2,
+    note: "이집트가 이기면 G조 3위가 2점권에 남을 수 있다. 무승부나 이란 승이면 G조 3위가 한국보다 위로 온다.",
+    requiredBadges: [
+      { label: "이집트 승 필요", tone: "good" },
+      { label: "무/이란 승 위험", tone: "warn" },
+    ],
+  },
   {
     id: "croatia",
     group: "L",
@@ -242,60 +273,6 @@ const matches = [
     opponentAdaptation: 58,
     note: "한국은 L조에서 가나가 크로아티아를 이기는 결과가 필요하다. 크로아티아가 이기거나 비기면 한국은 32강 탈락.",
     requiredBadges: [{ label: "가나 승", tone: "good" }],
-    aboveWhen: (outcome) => outcome === "win" || outcome === "draw",
-  },
-  {
-    id: "algeria",
-    group: "J",
-    team: "알제리",
-    flag: "dz",
-    opponent: "오스트리아",
-    opponentFlag: "at",
-    date: "2026.06.28 11:00 KST",
-    startsAt: Date.parse("2026-06-28T02:00:00Z"),
-    fifaRank: 32,
-    opponentFifaRank: 25,
-    groupRank: 3,
-    opponentGroupRank: 2,
-    opponentCanDropToThirdWhen: "win",
-    opponentProjectedThird: {
-      points: 3,
-      wins: 1,
-      draws: 0,
-      losses: 2,
-      goalDiff: -1,
-    },
-    drawEnough: true,
-    adaptation: 68,
-    opponentAdaptation: 57,
-    note: "무승부면 알제리가 승점 4로 한국보다 위에 온다. 한국은 이 경기에서 승패가 갈리는 결과가 필요하다.",
-    requiredBadges: [
-      { label: "알제리 승", tone: "good" },
-      { label: "오스트리아 승", tone: "good" },
-      { label: "무승부 제외", tone: "warn" },
-    ],
-    aboveWhen: (outcome) => outcome === "win" || outcome === "draw",
-  },
-  {
-    id: "belgium",
-    group: "G",
-    team: "벨기에",
-    flag: "be",
-    opponent: "뉴질랜드",
-    opponentFlag: "nz",
-    opponentLabel: "뉴질랜드",
-    date: "2026.06.27 12:00 KST",
-    startsAt: Date.parse("2026-06-27T03:00:00Z"),
-    fifaRank: 9,
-    opponentFifaRank: 89,
-    groupRank: 3,
-    opponentGroupRank: 4,
-    opponentCanReplaceThird: true,
-    drawEnough: true,
-    adaptation: 60,
-    opponentAdaptation: 54,
-    note: "벨기에는 비기기만 해도 한국보다 위다. 뉴질랜드가 이기면 뉴질랜드가 올라오므로, G조는 어떤 결과든 한국보다 위에 온다.",
-    requiredBadges: [{ label: "G조 추월 확정", tone: "bad" }],
     aboveWhen: (outcome) => outcome === "win" || outcome === "draw",
   },
   {
@@ -329,7 +306,78 @@ const matches = [
     ],
     aboveWhen: (outcome) => outcome === "win",
   },
+  {
+    id: "algeria",
+    group: "J",
+    team: "알제리",
+    flag: "dz",
+    opponent: "오스트리아",
+    opponentFlag: "at",
+    date: "2026.06.28 11:00 KST",
+    startsAt: Date.parse("2026-06-28T02:00:00Z"),
+    fifaRank: 32,
+    opponentFifaRank: 25,
+    groupRank: 3,
+    opponentGroupRank: 2,
+    drawEnough: true,
+    adaptation: 68,
+    opponentAdaptation: 57,
+    note: "무승부면 J조 3위가 승점 4가 된다. 한국은 이 경기에서 승패가 갈리는 결과가 필요하다.",
+    requiredBadges: [
+      { label: "알제리 승", tone: "good" },
+      { label: "오스트리아 승", tone: "good" },
+      { label: "무승부 제외", tone: "warn" },
+    ],
+    aboveWhen: (outcome) => outcome === "win" || outcome === "draw",
+  },
 ];
+
+const groupDefinitions = {
+  G: {
+    teams: [
+      { team: "Egypt", label: "이집트", flag: "eg", rank: 1, played: 2, wins: 1, draws: 1, losses: 0, points: 4, goalDiff: 2, goalsFor: 4, goalsAgainst: 2 },
+      { team: "Iran", label: "이란", flag: "ir", rank: 2, played: 2, wins: 0, draws: 2, losses: 0, points: 2, goalDiff: 0, goalsFor: 2, goalsAgainst: 2 },
+      { team: "Belgium", label: "벨기에", flag: "be", rank: 3, played: 2, wins: 0, draws: 2, losses: 0, points: 2, goalDiff: 0, goalsFor: 1, goalsAgainst: 1 },
+      { team: "New Zealand", label: "뉴질랜드", flag: "nz", rank: 4, played: 2, wins: 0, draws: 1, losses: 1, points: 1, goalDiff: -2, goalsFor: 3, goalsAgainst: 5 },
+    ],
+    matches: [
+      { matchId: "egyptIran", team: "Egypt", opponent: "Iran" },
+    ],
+  },
+  J: {
+    teams: [
+      { team: "Argentina", label: "아르헨티나", flag: "ar", rank: 1, played: 2, wins: 2, draws: 0, losses: 0, points: 6, goalDiff: 5, goalsFor: 5, goalsAgainst: 0 },
+      { team: "Austria", label: "오스트리아", flag: "at", rank: 2, played: 2, wins: 1, draws: 0, losses: 1, points: 3, goalDiff: 0, goalsFor: 3, goalsAgainst: 3 },
+      { team: "Algeria", label: "알제리", flag: "dz", rank: 3, played: 2, wins: 1, draws: 0, losses: 1, points: 3, goalDiff: -2, goalsFor: 2, goalsAgainst: 4 },
+      { team: "Jordan", label: "요르단", flag: "jo", rank: 4, played: 2, wins: 0, draws: 0, losses: 2, points: 0, goalDiff: -3, goalsFor: 2, goalsAgainst: 5 },
+    ],
+    matches: [
+      { matchId: "algeria", team: "Algeria", opponent: "Austria" },
+    ],
+  },
+  K: {
+    teams: [
+      { team: "Colombia", label: "콜롬비아", flag: "co", rank: 1, played: 2, wins: 2, draws: 0, losses: 0, points: 6, goalDiff: 3, goalsFor: 4, goalsAgainst: 1 },
+      { team: "Portugal", label: "포르투갈", flag: "pt", rank: 2, played: 2, wins: 1, draws: 1, losses: 0, points: 4, goalDiff: 5, goalsFor: 6, goalsAgainst: 1 },
+      { team: "DR Congo", label: "DR콩고", flag: "cd", rank: 3, played: 2, wins: 0, draws: 1, losses: 1, points: 1, goalDiff: -1, goalsFor: 1, goalsAgainst: 2 },
+      { team: "Uzbekistan", label: "우즈베키스탄", flag: "uz", rank: 4, played: 2, wins: 0, draws: 0, losses: 2, points: 0, goalDiff: -7, goalsFor: 1, goalsAgainst: 8 },
+    ],
+    matches: [
+      { matchId: "drcongo", team: "DR Congo", opponent: "Uzbekistan" },
+    ],
+  },
+  L: {
+    teams: [
+      { team: "England", label: "잉글랜드", flag: "en", rank: 1, played: 2, wins: 1, draws: 1, losses: 0, points: 4, goalDiff: 2, goalsFor: 4, goalsAgainst: 2 },
+      { team: "Ghana", label: "가나", flag: "gh", rank: 2, played: 2, wins: 1, draws: 1, losses: 0, points: 4, goalDiff: 1, goalsFor: 1, goalsAgainst: 0 },
+      { team: "Croatia", label: "크로아티아", flag: "hr", rank: 3, played: 2, wins: 1, draws: 0, losses: 1, points: 3, goalDiff: -1, goalsFor: 3, goalsAgainst: 4 },
+      { team: "Panama", label: "파나마", flag: "pa", rank: 4, played: 2, wins: 0, draws: 0, losses: 2, points: 0, goalDiff: -2, goalsFor: 0, goalsAgainst: 2 },
+    ],
+    matches: [
+      { matchId: "croatia", team: "Croatia", opponent: "Ghana" },
+    ],
+  },
+};
 
 const outcomes = [
   { value: "unknown", label: "미정" },
@@ -337,12 +385,6 @@ const outcomes = [
   { value: "draw", label: "무" },
   { value: "loss", label: "패" },
 ];
-
-const outcomeAdjustments = {
-  win: { points: 3, goalDiff: 1, wins: 1, draws: 0, losses: 0 },
-  draw: { points: 1, goalDiff: 0, wins: 0, draws: 1, losses: 0 },
-  loss: { points: 0, goalDiff: -1, wins: 0, draws: 0, losses: 1 },
-};
 
 const selectedOutcomes = Object.fromEntries(matches.map((match) => [match.id, "unknown"]));
 const orderedMatches = [...matches].sort((a, b) => a.startsAt - b.startsAt);
@@ -363,7 +405,7 @@ function renderTable() {
       const classes = [
         row.rank <= 8 ? "qualify-zone" : "",
         row.isKorea ? "korea-row" : "",
-        row.threatId && row.selectedOutcome === "unknown" ? "bubble-row" : "",
+        row.dynamicGroup && row.selectedOutcome === "unknown" ? "bubble-row" : "",
         row.projected ? "projected-row" : "",
       ]
         .filter(Boolean)
@@ -451,9 +493,25 @@ function formatRequiredBadges(match) {
 
 function getProjectedRows() {
   const rows = thirdPlaceRows.map((row) => {
-    const selectedOutcome = row.threatId ? selectedOutcomes[row.threatId] : "locked";
+    const selectedOutcome = row.dynamicGroup ? getGroupSelectionStatus(row.dynamicGroup) : "locked";
 
-    if (!row.threatId || selectedOutcome === "unknown") {
+    if (row.dynamicGroup) {
+      const projectedGroupThird = getGroupThirdPlaceProjection(row.dynamicGroup);
+
+      if (projectedGroupThird) {
+        return {
+          ...row,
+          ...projectedGroupThird,
+          group: row.dynamicGroup,
+          sortRank: row.rank,
+          status: `예상 ${row.dynamicGroup}조 3위`,
+          selectedOutcome,
+          projected: true,
+        };
+      }
+    }
+
+    if (!row.dynamicGroup || selectedOutcome === "unknown") {
       return {
         ...row,
         selectedOutcome,
@@ -461,69 +519,14 @@ function getProjectedRows() {
       };
     }
 
-    const match = getMatch(row.threatId);
-    const adjustment = outcomeAdjustments[selectedOutcome];
-
-    if (selectedOutcome === match?.opponentCanDropToThirdWhen) {
-      const projected = match.opponentProjectedThird;
-
-      return {
-        ...row,
-        team: match.opponent,
-        label: match.opponentLabel || match.opponent,
-        flag: match.opponentFlag,
-        played: 3,
-        wins: projected.wins,
-        draws: projected.draws,
-        losses: projected.losses,
-        points: projected.points,
-        goalDiff: projected.goalDiff,
-        status: "예상 조3위 교체",
-        selectedOutcome,
-        projected: true,
-        replacedByOpponent: true,
-      };
-    }
-
-    if (selectedOutcome === "loss" && match?.opponentCanReplaceThird) {
-
-      return {
-        ...row,
-        team: match.opponent,
-        label: match.opponentLabel || match.opponent,
-        flag: match.opponentFlag,
-        played: 3,
-        wins: 1,
-        draws: 1,
-        losses: 1,
-        points: 4,
-        goalDiff: 0,
-        status: "예상 조3위 교체",
-        selectedOutcome,
-        projected: true,
-        replacedByOpponent: true,
-      };
-    }
-
-    return {
-      ...row,
-      played: 3,
-      wins: row.wins + adjustment.wins,
-      draws: row.draws + adjustment.draws,
-      losses: row.losses + adjustment.losses,
-      points: row.points + adjustment.points,
-      goalDiff: row.goalDiff + adjustment.goalDiff,
-      status: `예상 ${outcomeLabel(selectedOutcome)}`,
-      selectedOutcome,
-      projected: true,
-    };
+    return row;
   });
 
   return rows
     .sort((a, b) => {
       if (b.points !== a.points) return b.points - a.points;
       if (b.goalDiff !== a.goalDiff) return b.goalDiff - a.goalDiff;
-      return a.rank - b.rank;
+      return (a.sortRank ?? a.rank) - (b.sortRank ?? b.rank);
     })
     .map((row, index) => {
       const rank = index + 1;
@@ -535,8 +538,119 @@ function getProjectedRows() {
     });
 }
 
-function getMatch(id) {
-  return matches.find((match) => match.id === id);
+function getGroupSelectionStatus(groupId) {
+  const group = groupDefinitions[groupId];
+
+  if (!group || group.matches.some((match) => selectedOutcomes[match.matchId] === "unknown")) {
+    return "unknown";
+  }
+
+  return "selected";
+}
+
+function getGroupThirdPlaceProjection(groupId) {
+  const group = groupDefinitions[groupId];
+
+  if (!group || getGroupSelectionStatus(groupId) === "unknown") {
+    return null;
+  }
+
+  if (groupId === "G") {
+    return getGroupGThirdPlaceProjection();
+  }
+
+  const groupRows = group.teams.map((team) => ({ ...team }));
+  const teamsById = Object.fromEntries(groupRows.map((team) => [team.team, team]));
+
+  group.matches.forEach((match) => {
+    applyMatchOutcome(teamsById[match.team], teamsById[match.opponent], selectedOutcomes[match.matchId]);
+  });
+
+  return groupRows
+    .sort((a, b) => {
+      if (b.points !== a.points) return b.points - a.points;
+      if (b.goalDiff !== a.goalDiff) return b.goalDiff - a.goalDiff;
+      if (b.goalsFor !== a.goalsFor) return b.goalsFor - a.goalsFor;
+      return a.rank - b.rank;
+    })[2];
+}
+
+function getGroupGThirdPlaceProjection() {
+  const egyptIranOutcome = selectedOutcomes.egyptIran;
+
+  if (egyptIranOutcome === "win") {
+    return {
+      team: "Iran",
+      label: "이란",
+      flag: "ir",
+      rank: 2,
+      played: 3,
+      wins: 0,
+      draws: 2,
+      losses: 1,
+      points: 2,
+      goalDiff: -1,
+      goalsFor: 2,
+    };
+  }
+
+  if (egyptIranOutcome === "draw") {
+    return {
+      team: "Iran",
+      label: "이란",
+      flag: "ir",
+      rank: 2,
+      played: 3,
+      wins: 0,
+      draws: 3,
+      losses: 0,
+      points: 3,
+      goalDiff: 0,
+      goalsFor: 3,
+    };
+  }
+
+  return {
+    team: "Egypt",
+    label: "이집트",
+    flag: "eg",
+    rank: 1,
+    played: 3,
+    wins: 1,
+    draws: 1,
+    losses: 1,
+    points: 4,
+    goalDiff: 1,
+    goalsFor: 4,
+  };
+}
+
+function applyMatchOutcome(team, opponent, outcome) {
+  team.played += 1;
+  opponent.played += 1;
+
+  if (outcome === "draw") {
+    team.draws += 1;
+    opponent.draws += 1;
+    team.points += 1;
+    opponent.points += 1;
+    team.goalsFor += 1;
+    opponent.goalsFor += 1;
+    team.goalsAgainst += 1;
+    opponent.goalsAgainst += 1;
+    return;
+  }
+
+  const winner = outcome === "win" ? team : opponent;
+  const loser = outcome === "win" ? opponent : team;
+
+  winner.wins += 1;
+  winner.points += 3;
+  winner.goalDiff += 1;
+  winner.goalsFor += 1;
+  loser.goalsAgainst += 1;
+  loser.losses += 1;
+  loser.goalDiff -= 1;
 }
 
 function getProjectedStatus(row, rank) {
@@ -548,7 +662,7 @@ function getProjectedStatus(row, rank) {
     return rank <= 8 ? "예상 진출권" : "예상 탈락권";
   }
 
-  if (row.threatId) {
+  if (row.dynamicGroup) {
     return "미정";
   }
 
@@ -561,14 +675,6 @@ function getProjectedStatus(row, rank) {
 
 function formatGoalDiff(value) {
   return value > 0 ? `+${value}` : String(value);
-}
-
-function isRowAboveKorea(row) {
-  if (row.points !== korea.points) {
-    return row.points > korea.points;
-  }
-
-  return row.goalDiff > korea.goalDiff;
 }
 
 function formatTeam(team, className = "", options = {}) {
@@ -592,12 +698,6 @@ function formatOpponent(match, className = "", options = {}) {
   const displayLabel = teamAbbreviations[match.opponentFlag] || match.opponent;
 
   return `<span class="${classes}"><span class="flag flag-${match.opponentFlag}" role="img" aria-label="${match.opponent} 국기"></span><span class="team-label" title="${match.opponent}">${displayLabel}</span>${rankBadge}</span>`;
-}
-
-function outcomeLabel(outcome) {
-  if (outcome === "win") return "승";
-  if (outcome === "draw") return "무";
-  return "패";
 }
 
 renderTable();
