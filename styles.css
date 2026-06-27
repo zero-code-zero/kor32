@@ -579,16 +579,30 @@ tbody tr.korea-row td:last-child {
   border-radius: 0 8px 8px 0;
 }
 
-tbody tr.bubble-row {
-  background: #fffdf0;
+tbody tr.rank-up {
+  background: #e8f7ef;
 }
 
-tbody tr.projected-row {
-  background: #eef8ff;
+tbody tr.rank-down {
+  background: #ffe1dd;
 }
 
-tbody tr.projected-row.korea-row {
-  background: #fff4f1;
+tbody tr.rank-up td:first-child {
+  box-shadow: inset 4px 0 0 var(--green);
+}
+
+tbody tr.rank-down td:first-child {
+  box-shadow: inset 4px 0 0 var(--red);
+}
+
+tbody tr.korea-row.rank-up,
+tbody tr.korea-row.rank-down {
+  background: #ffffff;
+}
+
+tbody tr.korea-row.rank-up td:first-child,
+tbody tr.korea-row.rank-down td:first-child {
+  box-shadow: none;
 }
 
 .match-list {
@@ -605,29 +619,10 @@ tbody tr.projected-row.korea-row {
   background: #fbfdfc;
 }
 
-.match-card.priority-match {
-  border: 2px solid var(--red);
-  background: #fff4f1;
-  box-shadow: 0 14px 34px rgba(207, 63, 53, 0.16);
-}
-
 .match-card header {
   display: flex;
   justify-content: space-between;
   gap: 12px;
-}
-
-.priority-label {
-  display: inline-flex;
-  align-items: center;
-  min-height: 26px;
-  margin-bottom: 8px;
-  padding: 4px 9px;
-  border-radius: 999px;
-  background: var(--red);
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 900;
 }
 
 .match-card h3 {
@@ -898,12 +893,20 @@ tbody tr.projected-row.korea-row {
     background: #f5fbf7;
   }
 
-  tbody tr.bubble-row {
-    background: #fffdf0;
+  tbody tr.rank-up {
+    background: #e8f7ef;
+    box-shadow: inset 4px 0 0 var(--green);
   }
 
-  tbody tr.projected-row {
-    background: #eef8ff;
+  tbody tr.rank-down {
+    background: #ffe1dd;
+    box-shadow: inset 4px 0 0 var(--red);
+  }
+
+  tbody tr.korea-row.rank-up,
+  tbody tr.korea-row.rank-down {
+    background: #ffffff;
+    box-shadow: none;
   }
 
   tbody tr.korea-row {

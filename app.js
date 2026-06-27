@@ -397,16 +397,18 @@ const pitchKoreaRankEl = document.querySelector("#pitch-korea-rank");
 function renderTable() {
   const projectedRows = getProjectedRows();
   const koreaRow = projectedRows.find((row) => row.isKorea);
+  const hasSelectedOutcome = Object.values(selectedOutcomes).some((outcome) => outcome !== "unknown");
 
   renderCurrentRank(koreaRow);
 
   tableBody.innerHTML = projectedRows
     .map((row) => {
+      const previousRank = row.previousRank ?? row.rank;
       const classes = [
         row.rank <= 8 ? "qualify-zone" : "",
         row.isKorea ? "korea-row" : "",
-        row.dynamicGroup && row.selectedOutcome === "unknown" ? "bubble-row" : "",
-        row.projected ? "projected-row" : "",
+        hasSelectedOutcome && row.rank < previousRank ? "rank-up" : "",
+        hasSelectedOutcome && row.rank > previousRank ? "rank-down" : "",
       ]
         .filter(Boolean)
         .join(" ");
@@ -439,10 +441,9 @@ function renderControls() {
   matchControls.innerHTML = orderedMatches
     .map(
       (match) => `
-        <article class="match-card ${match.id === "croatia" ? "priority-match" : ""}">
+        <article class="match-card">
           <header>
             <div>
-              ${match.id === "croatia" ? `<div class="priority-label">최중요 경기</div>` : ""}
               <h3>${match.group}조 · ${formatMatchTitle(match)}</h3>
               ${formatRequiredBadges(match)}
               <p>${match.note}</p>
@@ -532,6 +533,7 @@ function getProjectedRows() {
       const rank = index + 1;
       return {
         ...row,
+        previousRank: row.sortRank ?? row.rank,
         rank,
         status: getProjectedStatus(row, rank),
       };
