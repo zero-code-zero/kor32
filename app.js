@@ -114,19 +114,18 @@ const thirdPlaceRows = [
   {
     rank: 6,
     group: "L",
-    team: "Croatia",
-    label: "크로아티아",
-    flag: "hr",
-    played: 2,
+    team: "Ghana",
+    label: "가나",
+    flag: "gh",
+    played: 3,
     wins: 1,
-    draws: 0,
+    draws: 1,
     losses: 1,
-    points: 3,
-    goalDiff: -1,
-    goalsFor: 3,
-    matchDate: "2026.06.28 06:00 KST vs 가나",
-    status: "미정",
-    dynamicGroup: "L",
+    points: 4,
+    goalDiff: 0,
+    goalsFor: 2,
+    matchDate: "2026.06.28 06:00 KST vs 크로아티아 종료",
+    status: "한국보다 위",
   },
   {
     rank: 7,
@@ -231,37 +230,6 @@ const thirdPlaceRows = [
 
 const matches = [
   {
-    id: "croatia",
-    group: "L",
-    team: "크로아티아",
-    flag: "hr",
-    opponent: "가나",
-    opponentFlag: "gh",
-    date: "2026.06.28 06:00 KST",
-    startsAt: Date.parse("2026-06-27T21:00:00Z"),
-    fifaRank: 11,
-    opponentFifaRank: 68,
-    groupRank: 3,
-    opponentGroupRank: 2,
-    opponentCanDropToThirdWhen: "win",
-    opponentProjectedThird: {
-      points: 4,
-      wins: 1,
-      draws: 1,
-      losses: 1,
-      goalDiff: 0,
-    },
-    drawEnough: true,
-    adaptation: 62,
-    opponentAdaptation: 58,
-    note: "우루과이가 한국 아래로 확정되면서 가나 승이 단독 필수는 아니다. 가나 승이면 한국에 가장 유리하고, 크로아티아 승/무는 J·K조 결과까지 맞아야 한다.",
-    requiredBadges: [
-      { label: "가나 승 최선", tone: "good" },
-      { label: "크로아티아 승/무 위험", tone: "warn" },
-    ],
-    aboveWhen: (outcome) => outcome === "win" || outcome === "draw",
-  },
-  {
     id: "drcongo",
     group: "K",
     team: "DR콩고",
@@ -285,7 +253,7 @@ const matches = [
     drawEnough: false,
     adaptation: 67,
     opponentAdaptation: 61,
-    note: "DR콩고가 이기면 K조 3위가 한국보다 위로 온다. DR콩고 무승부나 우즈베키스탄 승이 유리하지만, DR콩고 승이어도 L·J조가 받쳐주면 한국이 8위에 남을 수 있다.",
+    note: "DR콩고가 이기면 K조 3위가 한국보다 위로 오면서 한국은 9위로 밀린다. DR콩고 무승부나 우즈베키스탄 승이 필요하다.",
     requiredBadges: [
       { label: "DR콩고 무", tone: "good" },
       { label: "우즈베키스탄 승", tone: "good" },
@@ -309,7 +277,7 @@ const matches = [
     drawEnough: true,
     adaptation: 68,
     opponentAdaptation: 57,
-    note: "오스트리아 승이면 J조 3위가 한국 아래로 내려간다. 알제리 승은 오스트리아가 3점·득실 -1·다득점에서 한국보다 위라 위험하고, 무승부는 알제리가 승점 4가 된다.",
+    note: "오스트리아 승이면 J조 3위가 한국 아래로 내려간다. 알제리 승은 오스트리아가 3점·득실 -1·다득점에서 한국보다 위이고, 무승부는 알제리가 승점 4가 된다.",
     requiredBadges: [
       { label: "오스트리아 승 최선", tone: "good" },
       { label: "알제리 승 위험", tone: "warn" },
@@ -340,17 +308,6 @@ const groupDefinitions = {
     ],
     matches: [
       { matchId: "drcongo", team: "DR Congo", opponent: "Uzbekistan" },
-    ],
-  },
-  L: {
-    teams: [
-      { team: "England", label: "잉글랜드", flag: "en", rank: 1, played: 2, wins: 1, draws: 1, losses: 0, points: 4, goalDiff: 2, goalsFor: 4, goalsAgainst: 2 },
-      { team: "Ghana", label: "가나", flag: "gh", rank: 2, played: 2, wins: 1, draws: 1, losses: 0, points: 4, goalDiff: 1, goalsFor: 1, goalsAgainst: 0 },
-      { team: "Croatia", label: "크로아티아", flag: "hr", rank: 3, played: 2, wins: 1, draws: 0, losses: 1, points: 3, goalDiff: -1, goalsFor: 3, goalsAgainst: 4 },
-      { team: "Panama", label: "파나마", flag: "pa", rank: 4, played: 2, wins: 0, draws: 0, losses: 2, points: 0, goalDiff: -2, goalsFor: 0, goalsAgainst: 2 },
-    ],
-    matches: [
-      { matchId: "croatia", team: "Croatia", opponent: "Ghana" },
     ],
   },
 };
